@@ -3,11 +3,9 @@ const { sequelize, Op, fn } = require('sequelize');
 const resMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const util = require('../modules/util');
-const calculateScore = require('../modules/calculateScore');
-const getResultId = require('../modules/getResultId');
-const { User, Result } = require('../models');
+const { Content, Actor, Series } = require('../models');
 
-const user = {
+const home = {
   /**
    * 점수값을 계산해 user row 생성
    * @summary user 생성
@@ -40,51 +38,6 @@ const user = {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, resMessage.DB_ERROR));
     }
   },
-
-  getResult: async (req, res) => {
-    const levelNum = req.params.levelNum;
-    try {
-      // step이 몇번인지 알아낸 이후에,
-      const results = await Result.findOne({
-        where: {
-          id: levelNum,
-        },
-      });
-
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.SUCCESS, results));
-    } catch (err) {
-      console.log(err);
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, resMessage.CREATE_POST_FAIL));
-    }
-  },
-
-  getScoreRate: async (req, res) => {
-    try {
-      // 생년월일 같은 사람들 몇명있는지
-      const sameBirthCount = await User.findOne({
-        attributes: [[fn('COUNT', '*'), 'count']],
-        where: {
-          birthYear: req.user.birthYear,
-        },
-      });
-
-      // 해당 사용자 점수 이상인 사람 수 조회
-      const userScoreCount = await User.findOne({
-        attributes: [[fn('COUNT', '*'), 'count']],
-        where: {
-          score: { [Op.gte]: req.user.score },
-        },
-      });
-      // console.log(userScoreCount.dataValues.count);
-      // console.log(sameBirthCount.dataValues.count);
-
-      const scoreRate = Math.round((userScoreCount.dataValues.count / sameBirthCount.dataValues.count) * 100);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.SUCCESS, scoreRate));
-    } catch (err) {
-      console.log(err);
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, resMessage.DB_ERROR));
-    }
-  },
 };
 
-module.exports = user;
+module.exports = home;

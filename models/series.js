@@ -1,19 +1,22 @@
-const Result = (sequelize, DataTypes) => {
+const Series = (sequelize, DataTypes) => {
   return sequelize.define(
-    "Result",
+    'Series',
     {
       //모델의 Attributes (Column)을 정의하는곳
       imageUrl: {
         type: DataTypes.STRING(100),
         allowNull: true,
       },
-      videoUrl:{
-        type:DataTypes.STRING(100),
-        allowNull: false,
+      seriesNum: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
-      text: {
-        type: DataTypes.TEXT(),
-        allowNull: false,
+      ContentId: {
+        type: DataTypes.INTEGER,
+        reference: {
+          model: 'Content',
+          key: 'id',
+        },
       },
     },
     {
@@ -24,4 +27,4 @@ const Result = (sequelize, DataTypes) => {
   );
 };
 
-module.exports = Result;
+module.exports = Series;
