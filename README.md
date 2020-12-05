@@ -1,11 +1,13 @@
 # **27th 합동세미나**
 
-- <b> SOPT 27th 합동세미나 <br>
+- <b> SOPT 27th 합동세미나 
+ <br>
 
 
 ## **📑 API 명세서**
 
-- <a href="https://github.com/SOPT27-WEBXSERVER/SERVER/wiki"> **API 명세서 링크** </a> <br>
+- <a href="https://github.com/SOPT27-WEBXSERVER/SERVER/wiki"> **API 명세서 링크** </a> 
+<br>
 
 
 ## **📙 DB ERD**
