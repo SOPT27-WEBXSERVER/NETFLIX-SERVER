@@ -4,9 +4,10 @@
 
 ## **📑 API 명세서**
 
-- **API 명세서 링크**
+- <a href=""> **API 명세서 링크** </a>
 
 ## **📙 DB ERD**
+![image](https://user-images.githubusercontent.com/37949197/101240755-9dc9b080-3734-11eb-8e71-332ce259e9d7.png)
 
 
 
