@@ -3,7 +3,7 @@ const { sequelize, Op, fn } = require('sequelize');
 const resMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const util = require('../modules/util');
-const { Content, Actor, Series } = require('../models');
+const { Content, Actor, Series, Recommend } = require('../models');
 
 const home = {
   /**

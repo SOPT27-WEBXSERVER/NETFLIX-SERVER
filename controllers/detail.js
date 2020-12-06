@@ -3,36 +3,31 @@ const { sequelize, Op, fn } = require('sequelize');
 const resMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const util = require('../modules/util');
-const { Content, Actor, Series } = require('../models');
+const { Content, Actor, Series, Recommend } = require('../models');
 
 const detail = {
   /**
-   * 점수값을 계산해 user row 생성
-   * @summary user 생성
-   * @param name, birthYear, answers
-   * @return 새로 생성된 user
+   * 회차 정보
+   * @summary 회차 정보 이미지, 몇 회차
+   * @param content idx 번호
+   * @return 회차 정보 이미지, 몇 회차
    */
-  createUser: async (req, res, next) => {
-    const { birthYear, answers } = req.body;
-    if (birthYear === undefined || answers === undefined) {
+  getSeries: async (req, res, next) => {
+    const ContentId = req.params.idx;
+
+    console.log(ContentId);
+
+    if (ContentId === undefined) {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));
     }
 
-    const score = calculateScore(answers);
-    const resultId = getResultId(score);
-
     try {
-      const result = await Result.findOne({ where: { id: resultId } });
-      const newUser = await User.create({
-        birthYear: birthYear,
-        score: score,
+      const results = await Series.findAll({
+        where: {
+          ContentId: ContentId,
+        },
       });
-
-      await result.addUser(newUser);
-
-      req.user = newUser;
-
-      next();
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.SUCCESS, results));
     } catch (err) {
       console.log(err);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, resMessage.DB_ERROR));
