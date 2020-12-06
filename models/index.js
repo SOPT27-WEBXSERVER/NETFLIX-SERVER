@@ -17,10 +17,13 @@ db.Sequelize = Sequelize;
 db.Content = require('./content')(sequelize, Sequelize);
 db.Actor = require('./actor')(sequelize, Sequelize);
 db.Series = require('./series')(sequelize, Sequelize);
+db.Recommend = require('./recommend')(sequelize, Sequelize);
 
 db.Actor.belongsTo(db.Content);
 db.Series.belongsTo(db.Content);
+db.Recommend.belongsTo(db.Content);
 db.Content.hasMany(db.Series, { onDelete: 'cascade' });
 db.Content.hasMany(db.Actor, { onDelete: 'cascade' });
+db.Content.hasMany(db.Recommend, { onDelete: 'cascade' });
 
 module.exports = db;
