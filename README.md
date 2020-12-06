@@ -11,7 +11,8 @@
 
 
 ## **📙 DB ERD**
-![image](https://user-images.githubusercontent.com/37949197/101240755-9dc9b080-3734-11eb-8e71-332ce259e9d7.png)
+![image](https://user-images.githubusercontent.com/37949197/101271050-a23caa80-37c2-11eb-8595-d011a67e9144.png)
+
 
  <br>
 
@@ -21,10 +22,13 @@
 db.Content = require('./content')(sequelize, Sequelize);
 db.Actor = require('./actor')(sequelize, Sequelize);
 db.Series = require('./series')(sequelize, Sequelize);
+db.Recommend = require('./recommend')(sequelize, Sequelize);
 
 db.Actor.belongsTo(db.Content);
 db.Series.belongsTo(db.Content);
+db.Recommend.belongsTo(db.Content);
 db.Content.hasMany(db.Series, { onDelete: 'cascade' });
 db.Content.hasMany(db.Actor, { onDelete: 'cascade' });
+db.Content.hasMany(db.Recommend, { onDelete: 'cascade' });
 ```
 
