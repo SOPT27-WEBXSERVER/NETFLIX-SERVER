@@ -33,6 +33,49 @@ const detail = {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, resMessage.DB_ERROR));
     }
   },
+/**
+   * 회차 정보
+   * @summary 상세페이지: 추천 콘텐츠 
+   * @param contentId
+   * @return Title, genre, information, detail, 
+   */
+  getRecommendation : async (req, res) => {
+    const contentIdx = req.params.idx;
+    
+    if (! contentIdx) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));
+    }
+    try {
+      const results = await Recommend.findAll({
+        where : {
+          ContentId : contentIdx,
+        },
+      })
+      console.log(results);
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.SUCCESS, results));
+    } catch (err) {
+      console.error(err);
+    }
+  }, 
+  getActors : async (req, res) => {
+    const contentIdx = req.params.idx;
+
+    if( ! contentIdx) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));
+    }
+    try {
+      const results = await Actor.findAll({
+        where : {
+          ContentId : contentIdx,
+        },
+      })
+      console.log(results);
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.SUCCESS, results));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
 };
 
 module.exports = detail;
