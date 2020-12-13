@@ -14,26 +14,26 @@ const home = {
    */
 
   mainIdx: async (req, res) => {
-    const MainId = req.params.idx;
+    const { idx } = req.body;
 
-    console.log(MainId);
+    console.log(idx);
 
-    if (MainId === undefined) {
+    if (idx === undefined) {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));
     }
     try {
       const results = await Content.findAll({
         where: {
-          MainId : MainId,
+          id : idx,
         },
       })
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, results));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, "message", results));
     } catch(error) {
       console.error(error);
     }
   },
   getContents: async (req, res) => {
-    const mainIdx = req.params.idx;
+    const { idx } = req.body;
 
     if (!mainIdx) {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, resMessage.NULL_VALUE));
@@ -41,11 +41,11 @@ const home = {
     try {
       const results = await Content.findAll({
         where: {
-          MainId : mainIdx, 
+          id : mainIdx, 
         },
       })
       console.log(results);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, resMessage.SUCCESS, results));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, "message", results));
     } catch (error) {
       console.error(error);
     }
